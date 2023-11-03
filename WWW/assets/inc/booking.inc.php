@@ -1,6 +1,6 @@
 
 <?php
-// Requires the 
+// Requires the booking class from booking.lib.php, found in the lib directerory.
  require '../lib/booking.lib.php';
  ?>
 
