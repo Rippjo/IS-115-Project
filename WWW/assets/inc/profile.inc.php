@@ -2,7 +2,7 @@
 session_start();
 
 // Check if the user is logged in and is a teaching assistant
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['user_type'] !== 'teacher') {
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     // Redirect to login page or show an error message
     header("Location: login.inc.php");
     exit();
@@ -11,7 +11,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSI
 // Include your database connection file
 require_once "../../../Private/dbConn.php";
 
-// Handle profile updates
+// Handle profile updates or creation
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_profile"])) {
     // Assuming you have input fields in your form with names like 'experience', 'courses_offer', etc.
     $experience = $_POST["experience"];
@@ -23,19 +23,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_profile"])) {
     // Get the user_id from the session
     $user_id = $_SESSION['user_id'];
 
-    // Update the profile in the 'profile' table
-    $sql = "UPDATE profile SET
+    // Check if the profile exists
+    $sqlCheckProfile = "SELECT * FROM profile WHERE user_id = '$user_id'";
+    $resultCheckProfile = $conn->query($sqlCheckProfile);
+
+    if ($resultCheckProfile->num_rows > 0) {
+        // Update the existing profile in the 'profile' table
+        $sql = "UPDATE profile SET
             experience = '$experience',
             courses_offer = '$courses_offer',
             tutoring_length = '$tutoring_length',
             availability = '$availability',
             topics_offered = '$topics_offered'
             WHERE user_id = '$user_id'";
+    } else {
+        // Insert a new profile into the 'profile' table
+        $sql = "INSERT INTO profile (user_id, experience, courses_offer, tutoring_length, availability, topics_offered)
+            VALUES ('$user_id', '$experience', '$courses_offer', '$tutoring_length', '$availability', '$topics_offered')";
+    }
 
     if ($conn->query($sql) === TRUE) {
         echo "Profile updated successfully";
     } else {
-        echo "Error updating profile: " . $conn->error;
+        echo "Error updating/inserting profile: " . $conn->error;
     }
 }
 
@@ -60,7 +70,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teaching Assistant Profile</title>
     <!-- Include your CSS file -->
-    <link rel="stylesheet" href="your_styles.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
 

@@ -9,5 +9,17 @@ CREATE TABLE user (
     user_type INT,
     registration_date DATE,
     birth_date DATE,
-    username varchar(15)
+    username varchar(15),
+    lastname varchar(30)
+);
+
+CREATE TABLE profile (
+    profile_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    experience TEXT,
+    courses_offer TEXT,
+    tutoring_length TEXT,
+    availability TEXT,
+    topics_offered TEXT,
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
