@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once "../../../Private/dbConn.php";
 
 // Innloggingsskript
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
@@ -23,11 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row["password"])) {
-            // Innlogging vellykket, send brukeren til riktig side basert på valg
+            // login succesful
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $row['user_id'];
 
-            // Sjekk hvilken knapp som ble trykket
+            // logs into respective page after what usertype the loggedn in user is
             if ($row['user_type'] == 1) {
                 header("Location: student_side.inc.php");
             } elseif ($row['user_type'] == 2) {

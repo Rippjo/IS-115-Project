@@ -55,46 +55,30 @@ class User {
     } 
 
     public function saveToDatabase() {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "project";
-
+        require_once "../../../Private/dbConn.php";
+    
         try {
-            // Create a connection to the database
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            
-            // Set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            // Prepare the SQL statement for inserting data into the database
-            $stmt = $conn->prepare("INSERT INTO user (username, name, lastName, phone_number, email, password, user_type, registration_date, birth_date)
-                                    VALUES (:username, :name, :lastName, :phone_number, :email, :password, :user_type, :registration_date, :birth_date)");
-
-            // Bind parameters to the prepared statement
-            $stmt->bindParam(':username', $this->username);
-            $stmt->bindParam(':name', $this->name);
-            $stmt->bindParam(':lastName', $this->lastName);
-            $stmt->bindParam(':phone_number', $this->phone_number);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':password', $this->password);
-            $stmt->bindParam(':user_type', $this->user_type);
-            $stmt->bindParam(':registration_date', $this->registration_date);
-            $stmt->bindParam(':birth_date', $this->birth_date);
-
-            // Execute the prepared statement
+            $sql = "INSERT INTO user (username, name, lastName, phone_number, email, password, user_type, registration_date, birth_date)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+            $stmt = $conn->prepare($sql);
+    
+            // Bind values directly
+            $stmt->bind_param('ssssssiss', $this->username, $this->name, $this->lastName, $this->phone_number, $this->email, $this->password, $this->user_type, $this->registration_date, $this->birth_date);
+    
             $stmt->execute();
-
-            // Close the database connection
+    
             $conn = null;
-
+    
             return true; // Successfully saved to the database
-        } catch(PDOException $e) {
+        } catch(Exception $e) {
             // Handle database errors here
             // You might want to log the error or return a specific error message
             return false; // Failed to save to the database
         }
     }
+    
+    
     public function isStrongPassword($password) {
         // Check if the password meets the specified criteria
         $uppercaseCount = preg_match_all('/[A-Z]/', $password); // Count uppercase letters

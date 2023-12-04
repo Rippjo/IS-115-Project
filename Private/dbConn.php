@@ -2,7 +2,7 @@
 // Database connection parameters
 $dbHost = 'localhost';
 $dbUser = 'root';
-$dbPass = '';
+$dbPass = '123';
 $dbName = 'project';
 
 // lager en database connection
