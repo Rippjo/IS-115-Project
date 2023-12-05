@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Set Teacher Availability</title>
+    <link rel="stylesheet" type="text/css" href="../css/TA.css">
 </head>
 <body>
 
