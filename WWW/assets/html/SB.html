@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Make Booking</title>
+</head>
+<body>
+
+<h2>Make Booking</h2>
+
+<form action="../inc/booking.inc.php" method="POST">
+    <label for="student_id">Student ID:</label><br>
+    <input type="text" id="student_id" name="student_id" required><br><br>
+
+    <label for="teacher_id">Teacher ID:</label><br>
+    <input type="text" id="teacher_id" name="teacher_id" required><br><br>
+
+    <label for="course_name">Course Name:</label><br>
+    <input type="text" id="course_name" name="course_name" required><br><br>
+
+    <label for="booking_date">Booking Date:</label><br>
+    <input type="date" id="booking_date" name="booking_date" required><br><br>
+
+    <label for="start_time">Start Time:</label><br>
+    <select id="start_time" name="start_time" required>
+        <option value="">Select Start Time</option>
+        <option value="08:00">08:00 AM</option>
+        <option value="09:00">09:00 AM</option>
+        <!-- Add more options for other start times if needed -->
+    </select><br><br>
+
+    <label for="end_time">End Time:</label><br>
+    <select id="end_time" name="end_time" required>
+        <option value="">Select End Time</option>
+        <option value="09:00">09:00 AM</option>
+        <option value="10:00">10:00 AM</option>
+        <!-- Add more options for other end times if needed -->
+    </select><br><br>
+
+    <label for="explanation">Explanation:</label><br>
+    <textarea id="explanation" name="explanation" rows="4" cols="50"></textarea><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $endTime = $_POST['end_time'];
 
     // Create an instance of the TA class
-    $ta = new Ta(); // You might need to pass the database connection parameters here
+    $ta = new TA(); // You might need to pass the database connection parameters here
 
     // Set the availability using the posted data
     $availabilitySet = $ta->setTeacherAvailability($teacherId, $dayOfWeek, $startTime, $endTime);
