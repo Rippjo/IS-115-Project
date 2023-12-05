@@ -101,12 +101,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
             <input type="date" name="birthDate" required>
 
             <div class="input-group">
-                <input type="checkbox" id="student" name="userType" value="1">
-                <label class="checkbox-label" for="student">Student</label>
+    <input type="radio" id="student" name="userType" value="1" required>
+    <label class="checkbox-label" for="student">Student</label>
 
-                <input type="checkbox" id="teacher" name="userType" value="2">
-                <label class="checkbox-label" for="teacher">Teacher Assistant</label>
-            </div>
+    <input type="radio" id="teacher" name="userType" value="2" required>
+    <label class="checkbox-label" for="teacher">Teacher Assistant</label>
+</div>
+
 
             <input type="submit" name="register" value="Register">
         </form>
