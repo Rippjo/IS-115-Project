@@ -1,13 +1,10 @@
 <?php
-session_start();
-
 // Require the User class file
 require '../lib/user.lib.php';
 
 $error_message = ""; // Holds error messages
 
-//registration
-
+// Registration
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     // Check if all required fields are submitted
     if (
@@ -16,41 +13,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
         isset($_POST["phone_number"]) &&
         isset($_POST["email"]) &&
         isset($_POST["password"]) &&
-        isset($_POST["userType"]) &&
-        isset($_POST["birthDate"])
+        isset($_POST["birthDate"]) &&
+        isset($_POST["userType"])
     ) {
         $name = $_POST["name"];
         $lastName = $_POST["lastName"];
         $phoneNumber = $_POST["phone_number"];
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $userType = $_POST["userType"];
         $birthDate = $_POST["birthDate"];
+        $userType = $_POST["userType"]; // Directly get the selected userType
 
-        // Create a User object
-        try {
-            $newUser = new User($name, $lastName, $phoneNumber, $email, $password, $userType, $birthDate);
-
-            // Check if the email is valid and password is valid
-            if (!$newUser->validateEmail($email)) {
-                $error_message = "Invalid email format. Please enter a valid email address.";
-            } else if (!$newUser->isStrongPassword($password)) {
-                $error_message = "Password does not meet the required criteria. It should have at least 1 uppercase letter, 2 numbers, and be at least 6 characters long.";
-            } else {
-                // hash the password
-                $newUser->hashPassword($password);
-                // Save the user to the database
-                if ($newUser->saveToDatabase()) {
-                    // Redirect to login page after successful registration
-                    header("Location: ../inc/login.inc.php");
-                    exit();
-                } else {
-                    $error_message = "Error registering user.";
+        // Check if the selected userType is '1' (student) or '2' (teacher)
+        if ($userType === '1' || $userType === '2') {
+            // Create a User object
+            try {
+                // Modify the constructor to use $userType as user_type
+                if ($userType === '1') {
+                    $newUser = new Student($name, $lastName, $phoneNumber, $email, $password, $userType, $birthDate);
+                } elseif ($userType === '2') {
+                    $newUser = new Teacher($name, $lastName, $phoneNumber, $email, $password, $userType, $birthDate);
                 }
+
+                // Check if the email is valid and password is valid
+                if (!$newUser->validateEmail($email)) {
+                    $error_message = "Invalid email format. Please enter a valid email address.";
+                } else if (!$newUser->isStrongPassword($password)) {
+                    $error_message = "Password does not meet the required criteria. It should have at least 1 uppercase letter, 2 numbers, and be at least 6 characters long.";
+                } else {
+                    // Hash the password
+                    $newUser->hashPassword($password);
+                    // Save the user to the database
+                    if ($newUser->saveToDatabase()) {
+                        // Redirect to login page after successful registration
+                        header("Location: ../inc/login.inc.php");
+                        exit();
+                    } else {
+                        $error_message = "Error registering user.";
+                    }
+                }
+            } catch (InvalidArgumentException $e) {
+                // Handle exceptions thrown in User class constructor
+                $error_message = $e->getMessage();
             }
-        } catch (InvalidArgumentException $e) {
-            // Handle exceptions thrown in User class constructor
-            $error_message = $e->getMessage();
+        } else {
+            $error_message = "Please select a valid user type.";
         }
     } else {
         $error_message = "Please fill in all required fields.";
@@ -95,14 +102,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
             <label for="birthDate">BirthDate:</label>
             <input type="date" name="birthDate" required>
 
-            <label for="userType">Usertype:</label>
-            <input type="text" name="userType" required>
+            <div class="input-group">
+                <input type="checkbox" id="student" name="userType" value="1">
+                <label class="checkbox-label" for="student">Student</label>
 
+                <input type="checkbox" id="teacher" name="userType" value="2">
+                <label class="checkbox-label" for="teacher">Teacher Assistant</label>
+            </div>
 
             <input type="submit" name="register" value="Register">
         </form>
     </div>
 </body>
 </html>
-
-

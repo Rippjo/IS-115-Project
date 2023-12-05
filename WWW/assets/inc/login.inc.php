@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             if ($row['user_type'] == 1) {
                 header("Location: student_side.inc.php");
             } elseif ($row['user_type'] == 2) {
-                header("Location: hjelpelærer_side.inc.php");
+                header("Location: teacher_side.inc.php");
             }
             exit();
         } else {

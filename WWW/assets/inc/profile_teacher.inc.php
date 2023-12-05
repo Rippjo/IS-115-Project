@@ -70,7 +70,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teaching Assistant Profile</title>
     <!-- Include your CSS file -->
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/profile_teacher.css">
 </head>
 <body>
 

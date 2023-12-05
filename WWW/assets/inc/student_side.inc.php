@@ -32,9 +32,9 @@ if (isset($_POST['logout'])) {
 <div class="container">
     <h2>Welcome to the Student page!</h2>
     <div class="button-container">
-        <a href="booking.php" class="action-button">Booking</a>
-        <a href="calendar.php" class="action-button">Calendar</a>
-        <a href="profile.inc.php" class="action-button">Profile</a>
+        <a href="booking.inc.php" class="action-button">Booking</a>
+        <a href="calendar_student.inc.php" class="action-button">Calendar</a>
+        <a href="profile_student.inc.php" class="action-button">Profile</a>
 
         <!-- Logout form -->
         <form action="" method="post">

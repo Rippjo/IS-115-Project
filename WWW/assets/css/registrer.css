@@ -41,6 +41,16 @@ input {
     border-radius: 4px;
 }
 
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkbox-label {
+    margin-right: 10px;
+}
+
 input[type="submit"] {
     background-color: #4caf50;
     color: #fff;
