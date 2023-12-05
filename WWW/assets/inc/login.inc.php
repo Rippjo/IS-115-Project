@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $row['user_id'];
 
-            // logs into respective page after what usertype the loggedn in user is (if usertype=1 he will get loggen into student page, and usertype=2 gets loggen into teacher page)
+            // logs onto respective page after what usertype the loggedn in user is (if usertype=1 he will get logged into student page, and usertype=2 gets loggen into teacher page)
             if ($row['user_type'] == 1) {
                 header("Location: student_side.inc.php");
             } elseif ($row['user_type'] == 2) {

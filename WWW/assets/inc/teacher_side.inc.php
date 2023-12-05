@@ -1,24 +1,24 @@
 <?php
 session_start();
 
-// Sjekk om brukeren er logget inn
+// Check if the user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    // Brukeren er ikke logget inn, videresend til innloggingssiden
+    // The user is not logged in, redirect to the login page
     header("Location: login.inc.php");
     exit();
 }
 
-// Utloggingsfunksjonalitet
+// Logout functionality
 if (isset($_POST['logout'])) {
-    // Avslutt sesjonen
+    // End the session
     session_unset();
     session_destroy();
 
-    // Videresend til innloggingssiden med utloggingsmelding
     header("Location: login.inc.php?logout=1");
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Check if the user is logged in and is a teaching assistant
+// Check if the user is logged
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     // Redirect to login page or show an error message
     header("Location: login.inc.php");
@@ -56,10 +56,8 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $profile = $result->fetch_assoc();
-} else {
-    // Handle the case where the profile doesn't exist (insert a new profile, show an error, etc.)
 }
-
+    
 $conn->close();
 ?>
 

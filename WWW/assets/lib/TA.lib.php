@@ -42,9 +42,6 @@ class TA {
         return $availability;
     }
 
-    // Additional methods for managing teacher availability can be added as required
-
-    // Close the database connection
     public function closeConnection() {
         $this->conn->close();
     }

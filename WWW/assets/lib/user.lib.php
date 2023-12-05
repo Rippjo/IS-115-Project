@@ -79,7 +79,7 @@ class User {
             return false;
         }
     }
-
+    // checks if the passwrod is strong from the function isStrongPassword
     public function hashPassword($password) {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
@@ -88,7 +88,7 @@ class User {
         return password_verify($inputPassword, $this->password);
     }
 }
-
+// Student class inheriting from User and then overrides the generateUsername method to append 'S' for students
 class Student extends User {
     protected function generateUsername() {
         $baseUsername = parent::generateUsername();
@@ -96,6 +96,7 @@ class Student extends User {
     }
 }
 
+// Teacher class inheriting from User and then overrides the generateUsername method to append 'T' for teachers
 class Teacher extends User {
     protected function generateUsername() {
         $baseUsername = parent::generateUsername();
@@ -104,3 +105,4 @@ class Teacher extends User {
 }
 
 ?>
+

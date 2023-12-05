@@ -1,3 +1,7 @@
+<?php
+// This is our project name in the database with all the tables we have used to make the website work 
+?>
+
 DBname: project
 
 CREATE TABLE user (

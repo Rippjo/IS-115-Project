@@ -1,8 +1,6 @@
 <?php
-// Require the User class file
-require '../lib/user.lib.php';
 
-$error_message = ""; // Holds error messages
+require '../lib/user.lib.php';
 
 // Registration
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
@@ -22,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
         $email = $_POST["email"];
         $password = $_POST["password"];
         $birthDate = $_POST["birthDate"];
-        $userType = $_POST["userType"]; // Directly get the selected userType
+        $userType = $_POST["userType"]; 
 
         // Check if the selected userType is '1' (student) or '2' (teacher)
         if ($userType === '1' || $userType === '2') {
@@ -41,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
                 } else if (!$newUser->isStrongPassword($password)) {
                     $error_message = "Password does not meet the required criteria. It should have at least 1 uppercase letter, 2 numbers, and be at least 6 characters long.";
                 } else {
-                    // Hash the password
+                    // Hash the password for better security
                     $newUser->hashPassword($password);
                     // Save the user to the database
                     if ($newUser->saveToDatabase()) {
@@ -115,3 +113,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     </div>
 </body>
 </html>
+
