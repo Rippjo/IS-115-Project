@@ -8,12 +8,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit();
 }
 
-// Include your database connection file
+// Include the database connection file
 require_once "../../../Private/dbConn.php";
 
 // Handle profile updates or creation
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_profile"])) {
-    // Assuming you have input fields in your form with names like 'experience', 'courses_offer', etc.
+    
     $experience = $_POST["experience"];
     $courses_offer = $_POST["courses_offer"];
     $tutoring_length = $_POST["tutoring_length"];
@@ -69,7 +69,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teaching Assistant Profile</title>
-    <!-- Include your CSS file -->
+   
     <link rel="stylesheet" href="../css/profile_teacher.css">
 </head>
 <body>
@@ -84,19 +84,15 @@ $conn->close();
     <label for="courses_offer">Courses Offered:</label>
     <input type="text" name="courses_offer" value="<?php echo $profile['courses_offer']; ?>"><br>
 
-    <label for="tutoring_length">Tutoring Length:</label>
-    <input type="text" name="tutoring_length" value="<?php echo $profile['tutoring_length']; ?>"><br>
-
-    <label for="availability">Availability:</label>
-    <input type="text" name="availability" value="<?php echo $profile['availability']; ?>"><br>
-
     <label for="topics_offered">Topics Offered:</label>
     <input type="text" name="topics_offered" value="<?php echo $profile['topics_offered']; ?>"><br>
 
     <input type="submit" name="update_profile" value="Update Profile">
-</form>
 
-<!-- Add other HTML elements as needed -->
+    <a href="../html/TAhtml.php">
+        <button type="button">Set Availability</button>
+    </a>
+</form>
 
 </body>
 </html>

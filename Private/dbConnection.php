@@ -70,3 +70,14 @@ CREATE TABLE booked_slots (
     FOREIGN KEY (teacher_id) REFERENCES user(user_id),
     FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
+
+CREATE TABLE profile (
+    profile_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    experience TEXT,
+    courses_offer TEXT,
+    tutoring_length VARCHAR(255),
+    availability TEXT,
+    topics_offered TEXT,
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+);

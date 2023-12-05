@@ -32,7 +32,7 @@ if (isset($_POST['logout'])) {
 <div class="container">
     <h2>Welcome to the Student page!</h2>
     <div class="button-container">
-        <a href="booking.inc.php" class="action-button">Booking</a>
+        <a href="../html/SB.html" class="action-button">Booking</a>
         <a href="calendar_student.inc.php" class="action-button">Calendar</a>
         <a href="profile_student.inc.php" class="action-button">Profile</a>
 
