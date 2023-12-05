@@ -1,34 +1,46 @@
-<?php
-require_once '../lib/TA.lib.php'; // Include the TA class file
+<?php 
+session_start();
 
-// Check if the request is a POST request
+require_once '../lib/TA.lib.php';
+require_once "../../../Private/dbConn.php";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Assuming the form sends these parameters: teacher_id, day_of_week, start_time, end_time
+    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+        header("Location: login.inc.php");
+        exit();
+    }
 
-    // Retrieve the posted data
-    $teacherId = $_POST['teacher_id'];
+    $teacherId = $_SESSION['user_id'];
     $dayOfWeek = $_POST['day_of_week'];
     $startTime = $_POST['start_time'];
     $endTime = $_POST['end_time'];
+    $courseName = $_POST['course_name'];
 
-    // Create an instance of the TA class
-    $ta = new TA(); // You might need to pass the database connection parameters here
+    $stmt = $conn->prepare("SELECT course_id FROM course WHERE course_name = ?");
+    $stmt->bind_param("s", $courseName);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Set the availability using the posted data
-    $availabilitySet = $ta->setTeacherAvailability($teacherId, $dayOfWeek, $startTime, $endTime);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $courseId = $row['course_id'];
+        
+        // Output fetched course ID and name for debugging
+        echo "Fetched Course ID: " . $courseId . ", Course Name: " . $courseName;
 
-    // Check if the availability was set successfully
-    if ($availabilitySet) {
-        echo "Teacher availability set successfully";
-        // You might want to redirect the teacher to another page or perform further actions
+        $ta = new TA();
+        $availabilitySet = $ta->setTeacherAvailability($teacherId, $courseId, $dayOfWeek, $startTime, $endTime);
+
+        if ($availabilitySet) {
+            echo "Teacher availability set successfully";
+        } else {
+            echo "Failed to set teacher availability";
+        }
     } else {
-        echo "Failed to set teacher availability";
-        // Handle the failure scenario
+        echo "No course found with the provided name";
     }
 
-    // Close the database connection (if needed)
-    // $ta->closeConnection(); // Uncomment if your TA class has a closeConnection method
-} else {
-    echo "Invalid request method"; // Handle if it's not a POST request
+    $stmt->close();
+    $conn->close();
 }
 ?>

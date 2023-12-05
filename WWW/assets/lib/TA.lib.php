@@ -12,21 +12,21 @@ class TA {
             die("Connection failed: " . $this->conn->connect_error);
         }
     }
-
-    // Method to set the availability of a teacher
-    public function setTeacherAvailability($teacherId, $dayOfWeek, $startTime, $endTime) {
-        $sql = "INSERT INTO teacher_availability (teacher_id, day_of_week, start_time, end_time) 
-                VALUES (?, ?, ?, ?)";
+    // method for setting teacher availability 
+    public function setTeacherAvailability($teacherId, $courseId, $dayOfWeek, $startTime, $endTime) {
+        $sql = "INSERT INTO teacher_availability (teacher_id, course_id, day_of_week, start_time, end_time) 
+                VALUES (?, ?, ?, ?, ?)";
         
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("isss", $teacherId, $dayOfWeek, $startTime, $endTime);
+        $stmt->bind_param("iisss", $teacherId, $courseId, $dayOfWeek, $startTime, $endTime);
         
         if ($stmt->execute()) {
-            return true; // Availability set successfully
+            return true; 
         } else {
-            return false; // Failed to set availability
+            return false; 
         }
     }
+    
 
     // Method to get the availability of a teacher
     public function getTeacherAvailability($teacherId) {
